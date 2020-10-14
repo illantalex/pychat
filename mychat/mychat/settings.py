@@ -31,6 +31,9 @@ DEBUG = os.getenv("DJANGO_DEBUG") != "False"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(", ")
 
+STREAM_API_KEY = os.getenv("STREAM_API_KEY")
+
+STREAM_API_SECRET = os.getenv("STREAM_API_SECRET")
 
 # Application definition
 
@@ -57,10 +60,12 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
     )
 }
+
+DJOSER = {"SERIALIZERS": {"token": "auth.serializers.StreamTokenSerializer",}}
 
 ROOT_URLCONF = "mychat.urls"
 
@@ -101,15 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
