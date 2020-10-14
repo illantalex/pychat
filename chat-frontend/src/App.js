@@ -1,47 +1,19 @@
 import React from "react";
-import {
-    Chat,
-    Channel,
-    ChannelHeader,
-    Thread,
-    Window,
-} from "stream-chat-react";
-import { MessageList, MessageInput } from "stream-chat-react";
-import { StreamChat } from "stream-chat";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import "stream-chat-react/dist/css/index.css";
+import { Chat } from "./Chat";
+import { Login } from "./Login";
 
-const chatClient = new StreamChat("qk4nn7rpcn75"); // Demo Stream Key
-const userToken =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiY29vbC1za3ktOSJ9.mhikC6HPqPKoCP4aHHfuH9dFgPQ2Fth5QoRAfolJjC4"; // Demo Stream Token
-
-chatClient.setUser(
-    {
-        id: "cool-sky-9",
-        name: "Cool sky",
-        image: "https://getstream.io/random_svg/?id=cool-sky-9&name=Cool+sky",
-    },
-    userToken
-);
-
-const channel = chatClient.channel("messaging", "godevs", {
-    // image and name are required, however, you can add custom fields
-    image:
-        "https://cdn.chrisshort.net/testing-certificate-chains-in-go/GOPHER_MIC_DROP.png",
-    name: "Talk about Go",
-});
+import { UnauthedRoute } from "./UnauthedRoute";
+import { AuthedRoute } from "./AuthedRoute";
 
 const App = () => (
-    <Chat client={chatClient} theme={"messaging dark"}>
-        <Channel channel={channel}>
-            <Window>
-                <ChannelHeader />
-                <MessageList />
-                <MessageInput />
-            </Window>
-            <Thread />
-        </Channel>
-    </Chat>
+    <Router>
+        <Switch>
+            <UnauthedRoute path="/auth/login" component={Login} />
+            <AuthedRoute path="/" component={Chat} />
+        </Switch>
+    </Router>
 );
 
 export default App;
